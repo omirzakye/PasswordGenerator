@@ -13,6 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# mytoken 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
+
+
 from django.contrib import admin
 from django.urls import path
 from generator import views
@@ -22,4 +26,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('generatedpassword/', views.password, name='password'),
     path('about/', views.about, name='about'),
+    path('oldpasswords/', views.oldPasswords, name='oldpasswords'),
 ]

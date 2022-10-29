@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -7,10 +8,12 @@ from django.http import HttpResponse
 
 # def home(request):
 #     return HttpResponse('<h2>This is home page<h2>')
+from generator import models
 
 
 def home(request):
-    return render(request, 'generator/home.html', {'password':'Yerqantspass'})
+    # all_passwords = models.Passwords.objects.order_by('-id')[:10][::-1]
+    return render(request, 'generator/home.html')
 
 
 def about(request):
@@ -34,4 +37,12 @@ def password(request):
     for x in range(length):
         thepassword += random.choice(characters)
 
-    return render(request, 'generator/password.html', {'passowrd': thepassword})
+    newPass = models.Passwords(password=thepassword, created_date=datetime.now())
+    newPass.save()
+
+    return render(request, 'generator/password.html', {'password': thepassword})
+
+
+def oldPasswords(request):
+    all_passwords = models.Passwords.objects.order_by('-id')[:10][::-1]
+    return render(request, 'generator/oldPasswords.html', {'all_passwords': all_passwords})
